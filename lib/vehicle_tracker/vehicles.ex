@@ -113,16 +113,16 @@ defmodule VehicleTracker.Vehicles do
     |> maybe_filter_by_door_count(filters[:door_count])
   end
 
-  # Helper funkcije za filtriranje
   defp maybe_filter_by_make(query, nil), do: query
-  defp maybe_filter_by_make(query, make), do: from v in query, where: v.make == ^make
+  defp maybe_filter_by_make(query, make), do: from(v in query, where: v.make == ^make)
 
   defp maybe_filter_by_fuel_type(query, nil), do: query
-  defp maybe_filter_by_fuel_type(query, fuel_type), do: from v in query, where: v.fuel_type == ^fuel_type
+  defp maybe_filter_by_fuel_type(query, fuel_type), do: from(v in query, where: v.fuel_type == ^fuel_type)
 
   defp maybe_filter_by_transmission(query, nil), do: query
-  defp maybe_filter_by_transmission(query, transmission), do: from v in query, where: v.transmission == ^transmission
+  defp maybe_filter_by_transmission(query, transmission), do: from(v in query, where: v.transmission == ^transmission)
 
   defp maybe_filter_by_door_count(query, nil), do: query
-  defp maybe_filter_by_door_count(query, door_count), do: from v in query, where: v.door_count == ^door_count
+  defp maybe_filter_by_door_count(query, door_count), do: from(v in query, where: v.door_count == ^door_count)
+
 end
