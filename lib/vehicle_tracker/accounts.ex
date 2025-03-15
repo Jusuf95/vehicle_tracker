@@ -55,7 +55,6 @@ defmodule VehicleTracker.Accounts do
 
   """
 def create_user(attrs) do
-attrs |> IO.inspect()
   case Repo.get_by(User, email: attrs.email) || Repo.get_by(User, username: attrs.username) do
     nil ->
       %User{}

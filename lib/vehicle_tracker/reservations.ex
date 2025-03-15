@@ -12,11 +12,14 @@ defmodule VehicleTracker.Reservations do
             Repo.rollback("Customer has unpaid debts")
           end
 
-          # Kreiranje rezervacije
-          reservation_changeset = Reservation.changeset(%Reservation{}, Map.merge(attrs, %{
-            vehicle_id: vehicle_id,
-            user_id: customer_id
-          }))
+          reservation_changeset =
+            Reservation.changeset(
+              %Reservation{},
+              Map.merge(attrs, %{
+                vehicle_id: vehicle_id,
+                user_id: customer_id
+              })
+            )
 
           case Repo.insert(reservation_changeset) do
             {:ok, reservation} ->
@@ -46,9 +49,10 @@ defmodule VehicleTracker.Reservations do
           total_price: reservation.total_price
         }
 
-        updated_history = Map.update(rental_history || %{}, :rentals, [new_entry], fn history ->
-          [new_entry | history]
-        end)
+        updated_history =
+          Map.update(rental_history || %{}, :rentals, [new_entry], fn history ->
+            [new_entry | history]
+          end)
 
         Repo.update!(Customer.changeset(customer, %{rental_history: updated_history}))
 
@@ -59,10 +63,12 @@ defmodule VehicleTracker.Reservations do
 
   defp has_pending_payments?(customer_id) do
     query =
-      from p in Payment,
-        join: r in Reservation, on: p.reservation_id == r.id,
+      from(p in Payment,
+        join: r in Reservation,
+        on: p.reservation_id == r.id,
         where: r.user_id == ^customer_id and p.status != "paid",
         select: count(p.id)
+      )
 
     Repo.one(query) > 0
   end
