@@ -2,13 +2,18 @@ defmodule VehicleTracker.CustomersTest do
   use VehicleTracker.DataCase
 
   alias VehicleTracker.Customers
+  import VehicleTracker.CustomersFixtures
 
   describe "customers" do
-    alias VehicleTracker.Customers.Customer
-
-    import VehicleTracker.CustomersFixtures
-
-    @invalid_attrs %{address: nil, first_name: nil, last_name: nil, email: nil, phone: nil, driving_license_number: nil, rental_history: nil}
+    @invalid_attrs %{
+      address: nil,
+      first_name: nil,
+      last_name: nil,
+      email: nil,
+      phone: nil,
+      driving_license_number: nil,
+      rental_history: nil
+    }
 
     test "list_customers/0 returns all customers" do
       customer = customer_fixture()
@@ -21,9 +26,18 @@ defmodule VehicleTracker.CustomersTest do
     end
 
     test "create_customer/1 with valid data creates a customer" do
-      valid_attrs = %{address: "some address", first_name: "some first_name", last_name: "some last_name", email: "some email", phone: "some phone", driving_license_number: "some driving_license_number", rental_history: %{}}
+      valid_attrs = %{
+        address: "some address",
+        first_name: "some first_name",
+        last_name: "some last_name",
+        email: "some email",
+        phone: "some phone",
+        driving_license_number: "some driving_license_number",
+        rental_history: %{}
+      }
 
-      assert {:ok, %Customer{} = customer} = Customers.create_customer(valid_attrs)
+      customer = customer_fixture(valid_attrs)
+
       assert customer.address == "some address"
       assert customer.first_name == "some first_name"
       assert customer.last_name == "some last_name"
@@ -39,16 +53,27 @@ defmodule VehicleTracker.CustomersTest do
 
     test "update_customer/2 with valid data updates the customer" do
       customer = customer_fixture()
-      update_attrs = %{address: "some updated address", first_name: "some updated first_name", last_name: "some updated last_name", email: "some updated email", phone: "some updated phone", driving_license_number: "some updated driving_license_number", rental_history: %{}}
 
-      assert {:ok, %Customer{} = customer} = Customers.update_customer(customer, update_attrs)
-      assert customer.address == "some updated address"
-      assert customer.first_name == "some updated first_name"
-      assert customer.last_name == "some updated last_name"
-      assert customer.email == "some updated email"
-      assert customer.phone == "some updated phone"
-      assert customer.driving_license_number == "some updated driving_license_number"
-      assert customer.rental_history == %{}
+      update_attrs = %{
+        address: "some updated address",
+        first_name: "some updated first_name",
+        last_name: "some updated last_name",
+        email: "some updated email",
+        phone: "some updated phone",
+        driving_license_number: "some updated driving_license_number",
+        rental_history: %{}
+      }
+
+      assert {:ok, updated_customer} =
+               Customers.update_customer(customer, update_attrs)
+
+      assert updated_customer.address == "some updated address"
+      assert updated_customer.first_name == "some updated first_name"
+      assert updated_customer.last_name == "some updated last_name"
+      assert updated_customer.email == "some updated email"
+      assert updated_customer.phone == "some updated phone"
+      assert updated_customer.driving_license_number == "some updated driving_license_number"
+      assert updated_customer.rental_history == %{}
     end
 
     test "update_customer/2 with invalid data returns error changeset" do
@@ -59,7 +84,7 @@ defmodule VehicleTracker.CustomersTest do
 
     test "delete_customer/1 deletes the customer" do
       customer = customer_fixture()
-      assert {:ok, %Customer{}} = Customers.delete_customer(customer)
+      assert {:ok, _delete_costume} = Customers.delete_customer(customer)
       assert_raise Ecto.NoResultsError, fn -> Customers.get_customer!(customer.id) end
     end
 
