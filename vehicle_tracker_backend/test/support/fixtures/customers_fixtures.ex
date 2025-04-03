@@ -1,4 +1,6 @@
 defmodule VehicleTracker.CustomersFixtures do
+  alias VehicleTracker.Customers
+
   @moduledoc """
   This module defines test helpers for creating
   entities via the `VehicleTracker.Customers` context.
@@ -7,7 +9,8 @@ defmodule VehicleTracker.CustomersFixtures do
   @doc """
   Generate a unique customer driving_license_number.
   """
-  def unique_customer_driving_license_number, do: "some driving_license_number#{System.unique_integer([:positive])}"
+  def unique_customer_driving_license_number,
+    do: "some driving_license_number#{System.unique_integer([:positive])}"
 
   @doc """
   Generate a unique customer email.
@@ -29,7 +32,7 @@ defmodule VehicleTracker.CustomersFixtures do
         phone: "some phone",
         rental_history: %{}
       })
-      |> VehicleTracker.Customers.create_customer()
+      |> Customers.create_customer()
 
     customer
   end

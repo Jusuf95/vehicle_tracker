@@ -1,3 +1,4 @@
+# Ensure this file exists and contains the following function
 defmodule VehicleTracker.AccountsFixtures do
   @moduledoc """
   This module defines test helpers for creating
@@ -11,8 +12,10 @@ defmodule VehicleTracker.AccountsFixtures do
     {:ok, user} =
       attrs
       |> Enum.into(%{
-        email: "some email",
-        password_hash: "some password_hash"
+        username: "test_user",
+        email: "test@example.com",
+        password: "Password@123",
+        password_hash: Bcrypt.hash_pwd_salt("Password@123")
       })
       |> VehicleTracker.Accounts.create_user()
 

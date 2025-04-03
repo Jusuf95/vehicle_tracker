@@ -11,20 +11,16 @@ defmodule VehicleTracker.VehiclesFixtures do
     {:ok, vehicle} =
       attrs
       |> Enum.into(%{
-        color: "some color",
-        door_count: 42,
-        first_registration_year: 42,
-        fuel_type: "some fuel_type",
-        is_available: true,
         make: "some make",
-        mileage: 42,
         model: "some model",
-        registration_date: ~D[2025-03-13],
+        fuel_type: "some fuel_type",
+        mileage: 42,
+        year_of_manufacture: 42,
+        registration_number: "some registration_number",
+        chassis_number: "some chassis_number",
+        rental_price_per_day: Decimal.new("100.0"),
         registration_expiry: ~D[2025-03-13],
-        return_date: ~D[2025-03-13],
-        taken_date: ~D[2025-03-13],
-        transmission: "some transmission",
-        year_of_manufacture: 42
+        status: "available"
       })
       |> VehicleTracker.Vehicles.create_vehicle()
 
